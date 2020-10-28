@@ -10,7 +10,8 @@ class SortCondition {
 
 class GZXDropDownMenuTestPage extends StatefulWidget {
   @override
-  _GZXDropDownMenuTestPageState createState() => _GZXDropDownMenuTestPageState();
+  _GZXDropDownMenuTestPageState createState() =>
+      _GZXDropDownMenuTestPageState();
 }
 
 class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
@@ -19,7 +20,8 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
   List<SortCondition> _distanceSortConditions = [];
   SortCondition _selectBrandSortCondition;
   SortCondition _selectDistanceSortCondition;
-  GZXDropdownMenuController _dropdownMenuController = GZXDropdownMenuController();
+  GZXDropdownMenuController _dropdownMenuController =
+      GZXDropdownMenuController();
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   GlobalKey _stackKey = GlobalKey();
@@ -33,7 +35,8 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
 
     _brandSortConditions.add(SortCondition(name: '全部', isSelected: true));
     _brandSortConditions.add(SortCondition(name: '金逸影城', isSelected: false));
-    _brandSortConditions.add(SortCondition(name: '中影国际城我比较长，你看我选择后是怎么显示的', isSelected: false));
+    _brandSortConditions
+        .add(SortCondition(name: '中影国际城我比较长，你看我选择后是怎么显示的', isSelected: false));
     _brandSortConditions.add(SortCondition(name: '星美国际城', isSelected: false));
     _brandSortConditions.add(SortCondition(name: '博纳国际城', isSelected: false));
     _brandSortConditions.add(SortCondition(name: '大地影院', isSelected: false));
@@ -73,7 +76,8 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
           preferredSize: Size.fromHeight(0)),
       backgroundColor: Colors.white,
       endDrawer: Container(
-        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width / 4, top: 0),
+        margin: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 4, top: 0),
         color: Colors.white,
 //        child: Container(color: Colors.red,child: Padding(
 //          padding: const EdgeInsets.all(8.0),
@@ -95,7 +99,10 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
                 alignment: Alignment.center,
                 child: Text(
                   '仿美团电影下拉筛选菜单$_dropdownMenuChange',
-                  style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
 //              SizedBox(height: 20,),
@@ -104,12 +111,14 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
                 // 下拉的头部项，目前每一项，只能自定义显示的文字、图标、图标大小修改
                 items: [
                   GZXDropDownHeaderItem(_dropDownHeaderItemStrings[0]),
-                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[1]),
+                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[1],imageCollapse:
+                  AssetImage('assets/icon/icon_collapse.png'),
+                      imageExpand: AssetImage('assets/icon/icon_expand.png')),
                   GZXDropDownHeaderItem(
                     _dropDownHeaderItemStrings[2],
                     style: TextStyle(color: Colors.green),
                   ),
-                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[3], iconData: Icons.filter_frames, iconSize: 18),
+                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[3],),
                 ],
                 // GZXDropDownHeader对应第一父级Stack的key
                 stackKey: _stackKey,
@@ -151,7 +160,8 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
               Expanded(
                 child: ListView.separated(
                     itemCount: 100,
-                    separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(height: 1.0),
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         child: ListTile(
@@ -195,17 +205,23 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
                   })),
               GZXDropdownMenuBuilder(
                   dropDownHeight: 40 * 8.0,
-                  dropDownWidget: _buildConditionListWidget(_brandSortConditions, (value) {
+                  dropDownWidget:
+                      _buildConditionListWidget(_brandSortConditions, (value) {
                     _selectBrandSortCondition = value;
-                    _dropDownHeaderItemStrings[1] = _selectBrandSortCondition.name == '全部' ? '品牌' : _selectBrandSortCondition.name;
+                    _dropDownHeaderItemStrings[1] =
+                        _selectBrandSortCondition.name == '全部'
+                            ? '品牌'
+                            : _selectBrandSortCondition.name;
                     _dropdownMenuController.hide();
                     setState(() {});
                   })),
               GZXDropdownMenuBuilder(
                   dropDownHeight: 40.0 * _distanceSortConditions.length,
-                  dropDownWidget: _buildConditionListWidget(_distanceSortConditions, (value) {
+                  dropDownWidget: _buildConditionListWidget(
+                      _distanceSortConditions, (value) {
                     _selectDistanceSortCondition = value;
-                    _dropDownHeaderItemStrings[2] = _selectDistanceSortCondition.name;
+                    _dropDownHeaderItemStrings[2] =
+                        _selectDistanceSortCondition.name;
                     _dropdownMenuController.hide();
                     setState(() {});
                   })),
@@ -255,7 +271,9 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
                 },
                 child: Container(
                     height: 40,
-                    color: _selectTempFirstLevelIndex == index ? Colors.grey[200] : Colors.white,
+                    color: _selectTempFirstLevelIndex == index
+                        ? Colors.grey[200]
+                        : Colors.white,
                     alignment: Alignment.center,
                     child: _selectTempFirstLevelIndex == index
                         ? Text(
@@ -294,7 +312,9 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
                               SizedBox(
                                 width: 20,
                               ),
-                              _selectFirstLevelIndex == _selectTempFirstLevelIndex && _selectSecondLevelIndex == index
+                              _selectFirstLevelIndex ==
+                                          _selectTempFirstLevelIndex &&
+                                      _selectSecondLevelIndex == index
                                   ? Text(
                                       '$item',
                                       style: TextStyle(
@@ -312,13 +332,15 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
     );
   }
 
-  _buildConditionListWidget(items, void itemOnTap(SortCondition sortCondition)) {
+  _buildConditionListWidget(
+      items, void itemOnTap(SortCondition sortCondition)) {
     return ListView.separated(
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemCount: items.length,
       // item 的个数
-      separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
+      separatorBuilder: (BuildContext context, int index) =>
+          Divider(height: 1.0),
       // 添加分割线
       itemBuilder: (BuildContext context, int index) {
         SortCondition goodsSortCondition = items[index];
@@ -343,7 +365,9 @@ class _GZXDropDownMenuTestPageState extends State<GZXDropDownMenuTestPage> {
                   child: Text(
                     goodsSortCondition.name,
                     style: TextStyle(
-                      color: goodsSortCondition.isSelected ? Theme.of(context).primaryColor : Colors.black,
+                      color: goodsSortCondition.isSelected
+                          ? Theme.of(context).primaryColor
+                          : Colors.black,
                     ),
                   ),
                 ),

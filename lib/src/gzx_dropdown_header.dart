@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'gzx_dropdown_menu_controller.dart';
 
 typedef OnItemTap<T> = void Function(T value);
@@ -45,7 +46,8 @@ class GZXDropDownHeader extends StatefulWidget {
   _GZXDropDownHeaderState createState() => _GZXDropDownHeaderState();
 }
 
-class _GZXDropDownHeaderState extends State<GZXDropDownHeader> with SingleTickerProviderStateMixin {
+class _GZXDropDownHeaderState extends State<GZXDropDownHeader>
+    with SingleTickerProviderStateMixin {
   bool _isShowDropDownItemWidget = false;
   double _screenWidth;
   int _menuCount;
@@ -71,8 +73,10 @@ class _GZXDropDownHeaderState extends State<GZXDropDownHeader> with SingleTicker
   Widget build(BuildContext context) {
 //    print('_GZXDropDownHeaderState.build');
 
-    _dropDownStyle = widget.dropDownStyle ?? TextStyle(color: Theme.of(context).primaryColor, fontSize: 13);
-    _iconDropDownColor = widget.iconDropDownColor ?? Theme.of(context).primaryColor;
+    _dropDownStyle = widget.dropDownStyle ??
+        TextStyle(color: Theme.of(context).primaryColor, fontSize: 13);
+    _iconDropDownColor =
+        widget.iconDropDownColor ?? Theme.of(context).primaryColor;
 
     MediaQueryData mediaQuery = MediaQuery.of(context);
     _screenWidth = mediaQuery.size.width;
@@ -92,7 +96,8 @@ class _GZXDropDownHeaderState extends State<GZXDropDownHeader> with SingleTicker
       height: widget.height,
 //      padding: EdgeInsets.only(top: 1, bottom: 1),
       decoration: BoxDecoration(
-        border: Border.all(color: widget.borderColor, width: widget.borderWidth),
+        border:
+            Border.all(color: widget.borderColor, width: widget.borderWidth),
       ),
       child: gridView,
     );
@@ -109,11 +114,14 @@ class _GZXDropDownHeaderState extends State<GZXDropDownHeader> with SingleTicker
 
     return GestureDetector(
       onTap: () {
-        final RenderBox overlay = widget.stackKey.currentContext.findRenderObject();
+        final RenderBox overlay =
+            widget.stackKey.currentContext.findRenderObject();
 
-        final RenderBox dropDownItemRenderBox = _keyDropDownHeader.currentContext.findRenderObject();
+        final RenderBox dropDownItemRenderBox =
+            _keyDropDownHeader.currentContext.findRenderObject();
 
-        var position = dropDownItemRenderBox.localToGlobal(Offset.zero, ancestor: overlay);
+        var position =
+            dropDownItemRenderBox.localToGlobal(Offset.zero, ancestor: overlay);
 //        print("POSITION : $position ");
         var size = dropDownItemRenderBox.size;
 //        print("SIZE : $size");
@@ -153,14 +161,12 @@ class _GZXDropDownHeaderState extends State<GZXDropDownHeader> with SingleTicker
                       item.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: _isShowDropDownItemWidget ? _dropDownStyle : widget.style.merge(item.style),
+                      style: _isShowDropDownItemWidget
+                          ? _dropDownStyle
+                          : widget.style.merge(item.style),
                     ),
                   ),
-                  Icon(
-                    !_isShowDropDownItemWidget ? item.iconData ?? Icons.arrow_drop_down : item.iconData ?? Icons.arrow_drop_up,
-                    color: _isShowDropDownItemWidget ? _iconDropDownColor : item?.style?.color ?? widget.iconColor,
-                    size: item.iconSize ?? widget.iconSize,
-                  ),
+                  _buildIcon(item)
                 ],
               ),
             ),
@@ -179,12 +185,34 @@ class _GZXDropDownHeaderState extends State<GZXDropDownHeader> with SingleTicker
       ),
     );
   }
+
+  Widget _buildIcon(GZXDropDownHeaderItem item) {
+    if (item.imageCollapse != null && item.imageExpand != null) {
+      return ImageIcon(
+        !_isShowDropDownItemWidget ? item.imageCollapse : item.imageExpand,
+        color: _isShowDropDownItemWidget
+            ? _iconDropDownColor
+            : item?.style?.color ?? widget.iconColor,
+        size: item.iconSize ?? widget.iconSize,
+      );
+    }
+    return Icon(
+      !_isShowDropDownItemWidget ? Icons.arrow_drop_down : Icons.arrow_drop_up,
+      color: _isShowDropDownItemWidget
+          ? _iconDropDownColor
+          : item?.style?.color ?? widget.iconColor,
+      size: item.iconSize ?? widget.iconSize,
+    );
+  }
 }
 
 class GZXDropDownHeaderItem {
   final String title;
-  final IconData iconData;
+  final ImageProvider imageCollapse;
+  final ImageProvider imageExpand;
   final double iconSize;
   final TextStyle style;
-  GZXDropDownHeaderItem(this.title, {this.iconData, this.iconSize, this.style});
+
+  GZXDropDownHeaderItem(this.title,
+      {this.imageCollapse, this.imageExpand, this.iconSize, this.style});
 }
